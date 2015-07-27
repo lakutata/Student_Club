@@ -1,0 +1,80 @@
+ul, p {
+    padding: 0;
+    margin: 0;
+}
+
+.times {
+    display: block;
+    margin: 15px 0;
+}
+
+/*首先，我们要创建一个容器class*/
+.times ul {
+    margin-left: 25px;
+    border-left: 2px solid #ddd;
+    cursor: default;
+}
+
+/*利用ul标签的特性，设置外边框左移25px，左边边框是2px粗的实心线，颜色一般要浅一点*/
+.times ul li {
+    width: 100%;
+    margin-left: -12px;
+    line-height: 20px;
+    font-weight: narmal;
+    margin-bottom: 20px;
+}
+
+/*一般情况，通过li标签控制圆点回到时间线上，然后控制要出现的文字大小和是否粗体*/
+.times ul li b {
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border: 2px solid #555;
+    margin: 0px;
+    margin-top: 5px;
+    margin-left: -5px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+}
+
+/*利用处理加粗以外没有其它特别属性b标签做时间轴的圆点。*/
+.times ul li span {
+    padding-left: 7px;
+    font-size: 15px;
+    line-height: 20px;
+    color: #555;
+    vertical-align: top;
+}
+
+/*设置span标签的属性，让它来做时间显示，加一点边距，使时间显示离时间线远一点*/
+.times ul li:hover b {
+    border: 2px solid #ff6600;
+}
+
+/*注意这一行，前面的li标签后面加了一个:hover伪属性，意思是鼠标移上来，激活后面的属性，这样可以设置鼠标移动到整个时间范围的时候，时间点和时间显示会变色*/
+.times ul li:hover span {
+    color: #ff6600;
+}
+
+/*同上*/
+.times ul li p {
+    padding-left: 15px;
+    font-size: 20px;
+    line-height: 25px;
+    padding-top: 5px;
+    margin-left: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #3276b1;
+    word-break: break-all;
+}
+
+.times ul li p img{
+    max-width: 99%;
+
+}
+
+/*这里利用段落标签p做文字介绍*/

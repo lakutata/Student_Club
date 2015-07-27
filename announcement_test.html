@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../assets/css/timeline.css"/>
+    <title>社团公告</title>
+</head>
+<body>
+<div id="announcements">
+</div>
+<button id="load_more" onclick="announcement()">加载更多</button>
+<script>
+    var current_page = 1;
+    announcement();
+    function announcement() {
+        var url = window.location.host;
+        ajax('http://' + url + '/Ajax/load_announcements.php?cid=1&page=' + current_page, function (data) {
+            var json_data = eval('(' + data + ')');//convert to json objects
+            if (json_data.length < 10) {
+                //end data
+                document.getElementById('load_more').style.visibility='hidden';
+            }
+            var selection = document.getElementById('announcements');
+            for (var i = 0; i < json_data.length; i++) {
+                var id = json_data[i]['id'];
+                var text = json_data[i]['text'];
+                var datetime = json_data[i]['datetime'];
+                var announcement = "<article class='announcement'><span class='announcement-time'><p>" + datetime + "</p></span><div class='announcement-body'><div class='text'><p>" + text + "</p></div></div></article>";
+                selection.innerHTML+=announcement;
+            }
+        });
+        current_page++;
+    }
+
+    function ajax(requestTarget, callback) {
+        var xmlhttp = null;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.open('GET', requestTarget, true);
+            xmlhttp.send();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    callback(xmlhttp.responseText);
+                }
+            }
+        } else {
+            alert('您的浏览器不支持XMLHttprequest，请您更换浏览器后再使用本程序。');
+        }
+    }
+</script>
+
+<article class="announcement">
+      <span class="announcement-time">
+      <p>2015-07-16 09:36:07</p>
+      </span>
+
+    <div class="announcement-body">
+        <div class="text">
+            <p>Hello, this is an example comment</p>
+        </div>
+    </div>
+</article>
+
+</body>
+</html>

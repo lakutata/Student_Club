@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../assets/css/main.css"/>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="portrait_area">
+    <canvas id="portrait">您的浏览器不支持此功能，请更换浏览器后再试</canvas>
+    <button type="button" class="button" onClick="document.getElementById('portrait_file').click()">上传头像</button>
+    <input type="file" single accept="image/jpeg,image/png,image/bmp" id="portrait_file" style="display:none" onchange="loadImage()">
+</div>
+<form method="post" target="_self" name="Application form" id="application_form">
+
+    <input type="text" name="portrait" id="portrait_data" style="display:none" >
+    <input type="text" name="cid" value="1" style="display:none" id="cid" >
+    <span><label>学号</label><input type="text" name="sid" id="sid"></span>
+    <span><label>姓名</label><input type="text" name="name" id="name"></span>
+    <span><label>手机</label><input type="text" name="telephone" id="telephone"></span>
+    <span><label>Email</label><input type="text" name="email" id="email"></span>
+    <span><label>QQ</label><input type="text" name="qq" id="qq"></span>
+    <span><label>申请部门</label>
+    <select name="department" value="1">
+        <option value="1">硬件部</option>
+        <option value="2">软件部</option>
+    </select></span>
+
+    <span><label>年级</label>
+    <select name="grade" value="2015">
+        <option value="2015">2015</option>
+        <option value="2014">2014</option>
+        <option value="2013">2013</option>
+        <option value="2012">2012</option>
+    </select></span>
+    <span><label>专业</label><input type="text" name="subject" id="subject"></span>
+    <span><label>班级</label><input type="text" name="class" id="class"></span>
+    <span><input type="submit" id="submit" class="button"></span>
+</form>
+<style>
+    #portrait {
+        box-shadow: 0 0 1px 1px #333333;
+        width: 240px;
+        height: 320px;
+        display:block;
+        margin: 5px auto;
+    }
+
+    #portrait_area{
+        display: block;
+        margin: 0 auto;
+    }
+    #portrait_area button{
+        display: block;
+        margin: 5px auto;
+    }
+
+    #application_form{
+        width: 70%;
+        display: inline-block;
+        position: relative;
+    }
+
+    #application_form span{
+        display: block;
+        text-align: left;
+        width: 100%;
+        position: relative;
+        margin: 10px auto;
+        padding-top: 10px;
+        box-shadow: 0 0 1px 2px #DDDDDD;
+        padding: 10px;
+    }
+
+    #application_form span label{
+        min-width: 100px;
+        width: auto;
+        display: inline-block;
+    }
+
+    #application_form span input{
+        width: 100%;
+        display: inline-block;
+    }
+
+    #application_form span select{
+        width: 50%;
+        display: inline-block;
+        text-align: center;
+    }
+    
+    body{
+        text-align: center;
+    }
+</style>
+<script>
+    var canvas=document.getElementById('portrait');
+    var canvas_ctx=canvas.getContext('2d');
+    var portrait_data=document.getElementById('portrait_data');
+    portrait_data.value=null;
+    //init canvas
+    canvas.width=240;
+    canvas.height=320;
+    function loadImage(){
+        canvas_ctx.clearRect(0,0,canvas.offsetWidth,canvas.offsetHeight);
+        var portrait_file=document.getElementById('portrait_file').files[0];
+        if(window.FileReader){
+            var fr = new FileReader();
+            fr.onload=function(e){
+                var img=new Image();
+                img.src=e.target.result;
+                img.onload=function(){
+                    canvas_ctx.drawImage(img,0,0,canvas.offsetWidth,canvas.offsetHeight);
+                    var new_img_data=canvas.toDataURL('image/jpeg');
+                    portrait_data.value=new_img_data;
+                }
+            }
+            fr.onerror=function(){
+                alert("头像加载的过程中发生了系统错误，请刷新页面重试");
+            }
+            fr.readAsDataURL(portrait_file);
+        }else{
+            alert("您的浏览器不支持文件上传功能，请更换浏览器后再试.");
+        }
+    }
+    var fields_check=setInterval(function(){
+        if(
+        document.getElementById('portrait_data').value!=""&&
+        document.getElementById('cid').value!=""&&
+        document.getElementById('sid').value!=""&&
+        document.getElementById('name').value!=""&&
+        document.getElementById('telephone').value!=""&&
+        document.getElementById('email').value!=""&&
+        document.getElementById('qq').value!=""&&
+        document.getElementById('subject').value!=""&&
+        document.getElementById('class').value!=""
+        ){
+            //document.getElementById('submit').setAttribute('disabled',false);
+        }else{
+            //document.getElementById('submit').setAttribute('disabled',true);
+
+        }
+    },100);
+</script>
+</body>
+</html>
